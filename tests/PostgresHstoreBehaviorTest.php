@@ -36,8 +36,13 @@ EOF;
         $this->assertTrue(method_exists('Foo', 'setProperty'));
         $this->assertTrue(method_exists('Foo', 'getPropertyKeys'));        
         $this->assertTrue(method_exists('Foo', 'hasPropertyKey'));
-        $this->assertTrue(method_exists('Foo', 'getHstoreFormat'));        
+        $this->assertTrue(method_exists('Foo', 'getHstoreFormat'));                 
     }
+
+    public function testQueryMethods()
+    {
+        $this->assertTrue(method_exists('FooQuery', 'filterByProperty')); 
+    }    
 
     public function testAccessMethods()
     {
