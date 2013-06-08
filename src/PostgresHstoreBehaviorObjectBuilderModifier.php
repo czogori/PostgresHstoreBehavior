@@ -33,6 +33,7 @@ class PostgresHstoreBehaviorObjectBuilderModifier
         $script = '';
         $script .= $this->addGetHstoreKeys($builder);
         $script .= $this->addHasHstoreKey($builder);
+        $script .= $this->addDeleteHstore($builder);
         $script .= $this->addDeleteHstoreKey($builder);
         $script .= $this->addGetHstoreFormat($builder);
 
@@ -69,6 +70,11 @@ class PostgresHstoreBehaviorObjectBuilderModifier
     private function addHasHstoreKey()
     {
         return $this->behavior->renderTemplate('objectHasHstoreKey', $this->getTemplateData());
+    }
+
+    private function addDeleteHstore()
+    {
+        return $this->behavior->renderTemplate('objectDeleteHstore', $this->getTemplateData());
     }
 
     private function addDeleteHstoreKey()

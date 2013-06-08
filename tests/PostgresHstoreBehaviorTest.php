@@ -63,17 +63,30 @@ EOF;
     public function testGetHstoreFormat()
     {        
         $foo = new Foo();                
-        $array = array('foo' => 'bar');
-        $this->assertEquals('"foo"=>"bar"', $foo->getHstoreFormat($array));
+        $array = array('foo' => 123, 'bar' => 'foobar');
+        $this->assertEquals('"foo"=>"123","bar"=>"foobar"', $foo->getHstoreFormat($array));
     }
 
     public function testDeleteMethod()
     {
         $foo = new Foo();        
-        $foo->setProperty(array('foo' => 'bar'));
+        $foo->setProperty(array('foo' => 'boo', 'bar' => 'moo'));
         
-        $this->assertEquals(array('foo' => 'bar'), $foo->getProperty());
+        $this->assertEquals(array('foo' => 'boo', 'bar' => 'moo'), $foo->getProperty());
         $foo->deletePropertyKey('foo');
+        $this->assertEquals(array('bar' => 'moo'), $foo->getProperty());
+        
+        $this->assertFalse($foo->hasPropertyKey('foo'));        
+        $this->assertCount(1, $foo->getProperty());
+    }
+
+    public function testDeleteAllMethod()
+    {
+        $foo = new Foo();        
+        $foo->setProperty(array('foo' => 'boo', 'bar' => 'moo'));
+        
+        $this->assertEquals(array('foo' => 'boo', 'bar' => 'moo'), $foo->getProperty());
+        $foo->deleteProperty();
         $this->assertEquals(array(), $foo->getProperty());
         
         $this->assertFalse($foo->hasPropertyKey('foo'));        
