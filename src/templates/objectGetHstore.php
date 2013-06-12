@@ -1,7 +1,7 @@
 
 
 	/**
-     * Get the Custom column value.
+     * Get the <?php echo ucfirst($columnName) ?> column value.
      *
      * @return array|string
      */
@@ -10,7 +10,7 @@
 		if(empty($key) && $this-><?php echo $columnName ?>AsArray && is_array($this-><?php echo $columnName ?>AsArray)) {
 			return $this-><?php echo $columnName ?>AsArray;
 		} else {
-			preg_match_all("|\"(.*)\"=>\"(.*)\"|U", $this-><?php echo $columnName ?>, $items, PREG_SET_ORDER);
+			preg_match_all("/\"(.*)\"=>\"(.*)\"/", $this-><?php echo $columnName ?>, $items, PREG_SET_ORDER);
 			
 			$array = array();
 			foreach($items as $item) {			
