@@ -10,12 +10,13 @@
 		if(empty($key) && $this-><?php echo $columnName ?>AsArray && is_array($this-><?php echo $columnName ?>AsArray)) {
 			return $this-><?php echo $columnName ?>AsArray;
 		} else {
-			preg_match_all("/\"(.*)\"=>\"(.*)\"/", $this-><?php echo $columnName ?>, $items, PREG_SET_ORDER);
-			
-			$array = array();
-			foreach($items as $item) {			
-				$array[$item[1]] = $item[2];
-			}
+			$hstore = str_replace('"', '', $this->extra_columns<?php echo '' ?>);
+            $pairs = explode(',', $hstore);
+            $array = array();
+            foreach ($pairs as $pair) { 
+                $items = explode('=>', $pair);
+                $array[$items[0]] = $items[1];
+            }
 
 			$this-><?php echo $columnName ?>AsArray = $array;		
 			if(!empty($key) && !array_key_exists($key, $out)) {
