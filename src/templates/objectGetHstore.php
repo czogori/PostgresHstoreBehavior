@@ -10,7 +10,7 @@
 		if(empty($key) && $this-><?php echo $columnName ?>AsArray && is_array($this-><?php echo $columnName ?>AsArray)) {
 			return $this-><?php echo $columnName ?>AsArray;
 		} else {
-			$hstore = str_replace('"', '', $this->extra_columns<?php echo '' ?>);
+			$hstore = str_replace('"', '', $this-><?php echo $columnName ?>AsArray);
             $pairs = explode(',', $hstore);
             $array = array();
             foreach ($pairs as $pair) { 
