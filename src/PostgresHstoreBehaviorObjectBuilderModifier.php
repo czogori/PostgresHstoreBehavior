@@ -21,7 +21,7 @@ class PostgresHstoreBehaviorObjectBuilderModifier
     public function objectAttributes($builder)
     {
         return $this->behavior->renderTemplate('objectAttributes', array(
-            'columnName' => $this->behavior->getParameter('column_name'),
+            'columnName' => lcfirst($this->camelize($this->behavior->getParameter('column_name'))),
         ));
     }
 
@@ -29,9 +29,8 @@ class PostgresHstoreBehaviorObjectBuilderModifier
      * {@inheritdoc}
      */
     public function objectMethods($builder)
-    {
-        $script = '';
-        $script .= $this->addGetHstoreKeys($builder);
+    {        
+        $script = $this->addGetHstoreKeys($builder);
         $script .= $this->addHasHstoreKey($builder);
         $script .= $this->addDeleteHstore($builder);
         $script .= $this->addDeleteHstoreKey($builder);
@@ -45,11 +44,11 @@ class PostgresHstoreBehaviorObjectBuilderModifier
      */
     public function objectFilter(&$script)
     {
-        $columName = ucfirst($this->behavior->getParameter('column_name'));
+        $columName = $this->camelize($this->behavior->getParameter('column_name'));
         $parser = new PropelPHPParser($script, true);
-        $parser->replaceMethod('get'.$columName, $this->addGetHstore());        
-        $parser->replaceMethod('set'.$columName, $this->addSetHstore());        
-        $script = $parser->getCode();    
+        $parser->replaceMethod('get' . $columName, $this->addGetHstore());        
+        $parser->replaceMethod('set' . $columName, $this->addSetHstore());        
+        $script = $parser->getCode();            
     }
 
     private function addGetHstore()
@@ -88,10 +87,15 @@ class PostgresHstoreBehaviorObjectBuilderModifier
     }
 
     private function getTemplateData()
-    {
+    {        
         return array(
             'tableName' => $this->behavior->getTable()->getName(),
-            'columnName' => $this->behavior->getParameter('column_name'),
+            'columnName' => lcfirst($this->camelize($this->behavior->getParameter('column_name'))),
         );
+    }
+
+    private function camelize($string) 
+    {
+        return ucfirst(str_replace(' ', '', ucwords(strtr($string, '_-', '  '))));
     }
 }
