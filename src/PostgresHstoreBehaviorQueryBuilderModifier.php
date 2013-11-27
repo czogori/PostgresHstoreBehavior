@@ -5,7 +5,7 @@
  */
 class PostgresHstoreBehaviorQueryBuilderModifier
 {
-	/**
+    /**
      * @var PostgresHstoreBehavior
      */
     protected $behavior;
@@ -14,16 +14,16 @@ class PostgresHstoreBehaviorQueryBuilderModifier
     {
         $this->behavior = $behavior;
     }
-	
-	/**
+
+    /**
      * {@inheritdoc}
      */
     public function queryFilter(&$script)
     {
         $columnName = ucfirst($this->behavior->getParameter('column_name'));
         $parser = new PropelPHPParser($script, true);
-        $parser->replaceMethod('filterBy'.$columnName, $this->addQueryFilterByHstore());                
-        $script = $parser->getCode();    
+        $parser->replaceMethod('filterBy'.$columnName, $this->addQueryFilterByHstore());
+        $script = $parser->getCode();
     }
 
     private function addQueryFilterByHstore()

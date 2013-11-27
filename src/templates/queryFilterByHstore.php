@@ -16,7 +16,7 @@
      * @return BookQuery The current query, for fluid interface
      */
     public function filterBy<?php echo ucfirst($columnName) ?>($key = null, $value = null, $comparison = null)
-    {       
+    {
         if (null === $comparison) {
             if (preg_match('/[\%\*]/', $value)) {
                 $value = str_replace('*', '%', $value);
@@ -24,6 +24,7 @@
             } else {
                 $comparison = Criteria::EQUAL;
             }
-        }        
+        }
+
         return $this->where(sprintf("%s -> '%s' %s ?", <?php echo ucfirst($tableName) ?>Peer::CUSTOM, $key, $comparison), $value, PDO::PARAM_STR);
     }

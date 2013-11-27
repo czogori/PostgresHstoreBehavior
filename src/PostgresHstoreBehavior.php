@@ -13,17 +13,17 @@ class PostgresHstoreBehavior extends Behavior
     /**
      * @var PostgresHstoreBehaviorQueryBuilderModifier
      */
-    private $queryBuilderModifier;      
+    private $queryBuilderModifier;
 
     /**
      * {@inheritdoc}
      */
     public function getObjectBuilderModifier()
     {
-      if (is_null($this->objectBuilderModifier))
-      {
+      if (is_null($this->objectBuilderModifier)) {
         $this->objectBuilderModifier = new PostgresHstoreBehaviorObjectBuilderModifier($this);
       }
+
       return $this->objectBuilderModifier;
     }
 
