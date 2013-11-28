@@ -36,6 +36,7 @@ class PostgresHstoreBehaviorObjectBuilderModifier
         $script .= $this->addDeleteHstoreKey($builder);
         $script .= $this->addGetHstoreFormat($builder);
         $script .= $this->addMagic($builder);
+        $script .= $this->addPrivate($builder);
 
         return $script;
     }
@@ -90,6 +91,11 @@ class PostgresHstoreBehaviorObjectBuilderModifier
     private function addMagic()
     {
         return $this->behavior->renderTemplate('objectMagic', $this->getTemplateData());
+    }
+
+    private function addPrivate()
+    {
+        return $this->behavior->renderTemplate('objectPrivate', $this->getTemplateData());
     }
 
     private function getTemplateData()
