@@ -9,7 +9,7 @@ public function __call($name, $params)
 {                
     $key = strtolower(ltrim(ltrim($name, 'get'), 'set'));
     if(null === $this-><?php echo $columnName ?>AsArray) {
-        $hstore = str_replace('"', '', $this-><?php echo $columnName ?>);
+        $hstore = str_replace('"', '', $this-><?php echo $columnNameUnderscore ?>);
         $pairs = explode(',', $hstore);
         $array = array();
         foreach ($pairs as $pair) {

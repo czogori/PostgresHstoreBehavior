@@ -45,7 +45,7 @@ class PostgresHstoreBehaviorObjectBuilderModifier
      */
     public function objectFilter(&$script)
     {
-        $columName = $this->camelize($this->behavior->getParameter('column_name'));
+        $columName = ucfirst($this->camelize($this->behavior->getParameter('column_name')));
         $parser = new PropelPHPParser($script, true);
         $parser->replaceMethod('get' . $columName, $this->addGetHstore());
         $parser->replaceMethod('set' . $columName, $this->addSetHstore());
@@ -96,12 +96,13 @@ class PostgresHstoreBehaviorObjectBuilderModifier
     {
         return array(
             'tableName' => $this->behavior->getTable()->getName(),
-            'columnName' => lcfirst($this->camelize($this->behavior->getParameter('column_name'))),
+            'columnName' => $this->camelize($this->behavior->getParameter('column_name')),
+            'columnNameUnderscore' => $this->behavior->getParameter('column_name'),
         );
     }
 
     private function camelize($string)
     {
-        return ucfirst(str_replace(' ', '', ucwords(strtr($string, '_-', '  '))));
+        return lcfirst(str_replace(' ', '', ucwords(strtr($string, '_-', '  '))));
     }
 }
