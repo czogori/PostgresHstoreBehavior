@@ -13,7 +13,7 @@ public function __call($name, $params)
         case 'get':
             return $this-><?php echo $columnName ?>AsArray[$key];
         case 'set':
-            $this-><?php echo $columnName ?>AsArray[$key] = $params[0];
+            $this->set<?php echo ucfirst($columnName) ?>(array($key => $params[0]));
             break;
         default:
             if (isset($this-><?php echo $columnName ?>AsArray[$key])) {
