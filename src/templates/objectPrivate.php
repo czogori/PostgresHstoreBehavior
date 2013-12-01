@@ -5,7 +5,7 @@
  */
 private function initExtraFieldsAsArray()
 {
-    if (null === $this-><?php echo $columnName ?>AsArray) {
+    if (null === $this-><?php echo $columnName ?>AsArray && null !== $this-><?php echo $columnNameUnderscore ?>) {
         $hstore = str_replace('"', '', $this-><?php echo $columnNameUnderscore ?>);
         $pairs = explode(',', $hstore);
         $array = array();
