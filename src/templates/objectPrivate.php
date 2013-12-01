@@ -11,7 +11,7 @@ private function initExtraFieldsAsArray()
         $array = array();
         foreach ($pairs as $pair) {
             $items = explode('=>', $pair);
-            $array[$items[0]] = $items[1];
+            $array[trim($items[0])] = trim($items[1]);
         }
         $this-><?php echo $columnName ?>AsArray = $array;
     }
