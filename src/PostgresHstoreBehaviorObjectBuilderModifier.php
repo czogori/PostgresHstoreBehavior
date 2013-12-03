@@ -30,13 +30,19 @@ class PostgresHstoreBehaviorObjectBuilderModifier
      */
     public function objectMethods($builder)
     {
-        $script = $this->addGetHstoreKeys($builder);
-        $script .= $this->addHasHstoreKey($builder);
-        $script .= $this->addDeleteHstore($builder);
-        $script .= $this->addDeleteHstoreKey($builder);
-        $script .= $this->addGetHstoreFormat($builder);
-        $script .= $this->addMagic($builder);
-        $script .= $this->addPrivate($builder);
+        $script = '';
+        $templates = array(
+            'objectGetHstoreKeys',
+            'objectHasHstoreKey',
+            'objectDeleteHstore',
+            'objectDeleteHstoreKey',
+            'objectGetHstoreFormat',
+            'objectMagic',
+            'objectPrivate',      
+        );
+        foreach ($templates as $template) {
+            $script .= $this->behavior->renderTemplate($template, $this->getTemplateData());
+        }
 
         return $script;
     }
@@ -48,55 +54,10 @@ class PostgresHstoreBehaviorObjectBuilderModifier
     {
         $columName = ucfirst($this->camelize($this->behavior->getParameter('column_name')));
         $parser = new PropelPHPParser($script, true);
-        $parser->replaceMethod('get' . $columName, $this->addGetHstore());
-        $parser->replaceMethod('set' . $columName, $this->addSetHstore());
+        $parser->replaceMethod('get' . $columName, $this->behavior->renderTemplate('objectGetHstore', $this->getTemplateData()));
+        $parser->replaceMethod('set' . $columName, $this->behavior->renderTemplate('objectSetHstore', $this->getTemplateData()));
         $script = $parser->getCode();
-    }
-
-    private function addGetHstore()
-    {
-        return $this->behavior->renderTemplate('objectGetHstore', $this->getTemplateData());
-    }
-
-    private function addSetHstore()
-    {
-        return $this->behavior->renderTemplate('objectSetHstore', $this->getTemplateData());
-    }
-
-    private function addGetHstoreKeys()
-    {
-        return $this->behavior->renderTemplate('objectGetHstoreKeys', $this->getTemplateData());
-    }
-
-    private function addHasHstoreKey()
-    {
-        return $this->behavior->renderTemplate('objectHasHstoreKey', $this->getTemplateData());
-    }
-
-    private function addDeleteHstore()
-    {
-        return $this->behavior->renderTemplate('objectDeleteHstore', $this->getTemplateData());
-    }
-
-    private function addDeleteHstoreKey()
-    {
-        return $this->behavior->renderTemplate('objectDeleteHstoreKey', $this->getTemplateData());
-    }
-
-    private function addGetHstoreFormat()
-    {
-        return $this->behavior->renderTemplate('objectGetHstoreFormat', $this->getTemplateData());
-    }
-
-    private function addMagic()
-    {
-        return $this->behavior->renderTemplate('objectMagic', $this->getTemplateData());
-    }
-
-    private function addPrivate()
-    {
-        return $this->behavior->renderTemplate('objectPrivate', $this->getTemplateData());
-    }
+    }   
 
     private function getTemplateData()
     {
