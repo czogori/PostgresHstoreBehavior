@@ -11,7 +11,7 @@
 
         if (is_array($array) && count($array) > 0) {
 
-            $this-><?php echo $columnName ?>AsArray = array_merge((array)$this-><?php echo $columnName ?>AsArray, $array);
+            $this-><?php echo $columnName ?>AsArray = array_merge((array) $this-><?php echo $columnName ?>AsArray, $array);
             $this-><?php echo $columnNameUnderscore ?> = $this->getHstoreFormat($this-><?php echo $columnName ?>AsArray);
             $this->modifiedColumns[] = <?php echo ucfirst($tableName) ?>Peer::<?php echo strtoupper($columnNameUnderscore) ?>;
         }

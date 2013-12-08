@@ -38,7 +38,7 @@ class PostgresHstoreBehaviorObjectBuilderModifier
             'objectDeleteHstoreKey',
             'objectGetHstoreFormat',
             'objectMagic',
-            'objectPrivate',      
+            'objectPrivate',
         );
         foreach ($templates as $template) {
             $script .= $this->behavior->renderTemplate($template, $this->getTemplateData());
@@ -57,7 +57,7 @@ class PostgresHstoreBehaviorObjectBuilderModifier
         $parser->replaceMethod('get' . $columName, $this->behavior->renderTemplate('objectGetHstore', $this->getTemplateData()));
         $parser->replaceMethod('set' . $columName, $this->behavior->renderTemplate('objectSetHstore', $this->getTemplateData()));
         $script = $parser->getCode();
-    }   
+    }
 
     private function getTemplateData()
     {

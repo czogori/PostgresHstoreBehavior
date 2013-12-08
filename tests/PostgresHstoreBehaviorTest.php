@@ -50,24 +50,24 @@ EOF;
     {
         $foo = new Foo();
         $foo->setProperty(array('key' => 'value'));
-        
+
         $this->assertEquals(array('key' => 'value'), $foo->getProperty());
         $this->assertEquals(array('key'), $foo->getPropertyKeys());
     }
 
     public function testMagicMethods()
     {
-        $foo = new Foo();        
+        $foo = new Foo();
         $foo->setFoo('bar');
 
-        $this->assertEquals('bar', $foo->getFoo());        
+        $this->assertEquals('bar', $foo->getFoo());
     }
 
     public function testHasMethod()
     {
         $foo = new Foo();
         $foo->setProperty(array('foo' => 'bar'));
-        
+
         $this->assertTrue($foo->hasPropertyKey('foo'));
         $this->assertFalse($foo->hasPropertyKey('bar'));
     }
