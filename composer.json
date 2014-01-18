@@ -2,6 +2,7 @@
     "name": "czogori/propel-postgres-hstore-behavior",
     "description": "Storage of key-value items using Postgres hstore.",
     "keywords": [ "propel", "behavior", "postgresql", "postgres", "hstore" ],
+    "homepage": "https://github.com/czogori/PostgresHstoreBehavior",
     "license": "MIT",
     "homepage": "https://github.com/czogori/PostgresHstoreBehavior",
     "require": {
