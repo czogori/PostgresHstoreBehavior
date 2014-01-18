@@ -3,7 +3,8 @@
     "description": "Storage of key-value items using Postgres hstore.",
     "keywords": [ "propel", "behavior", "postgresql", "postgres", "hstore" ],
     "license": "MIT",
-    "require": {        
+    "homepage": "https://github.com/czogori/PostgresHstoreBehavior",
+    "require": {
         "propel/propel1": "~1.6"
     },
     "authors": [
