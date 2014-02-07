@@ -1,4 +1,3 @@
-
 /**
  * @param string $name   Method name.
  * @param array  $params Parameters.
@@ -23,4 +22,19 @@ public function __call($name, $params)
             }
             break;
     }
+}
+
+public function __get($key)
+{        
+    $this->initExtraFieldsAsArray();    
+    return isset($this-><?php echo $columnName ?>AsArray[$key])
+        ? $this-><?php echo $columnName ?>AsArray[$key]
+        : null;
+}
+    
+public function __set($key, $value)
+{
+    $this-><?php echo $columnName ?>AsArray[$key] = $value;
+    $this-><?php echo $columnNameUnderscore ?> = $this->getHstoreFormat($this-><?php echo $columnName ?>AsArray);
+    $this->modifiedColumns[] = <?php echo ucfirst($tableName) ?>Peer::<?php echo strtoupper($columnNameUnderscore) ?>; 
 }

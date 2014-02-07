@@ -62,7 +62,7 @@ class PostgresHstoreBehaviorObjectBuilderModifier
     private function getTemplateData()
     {
         return array(
-            'tableName' => $this->behavior->getTable()->getName(),
+            'tableName' => $this->behavior->getTable()->getPhpName(),
             'columnName' => $this->camelize($this->behavior->getParameter('column_name')),
             'columnNameUnderscore' => $this->behavior->getParameter('column_name'),
         );
