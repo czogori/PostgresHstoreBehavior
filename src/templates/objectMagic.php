@@ -10,7 +10,7 @@ public function __call($name, $params)
     $this->initExtraFieldsAsArray();
     switch (substr($name, 0, 3)) {
         case 'get':
-            return $this-><?php echo $columnName ?>AsArray[$key];
+            return isset($this-><?php echo $columnName ?>AsArray[$key]) ? $this-><?php echo $columnName ?>AsArray[$key] : null;
         case 'set':
             $this->set<?php echo ucfirst($columnName) ?>(array($key => $params[0]));
             break;
