@@ -15,11 +15,7 @@ public function __call($name, $params)
             $this->set<?php echo ucfirst($columnName) ?>(array($key => $params[0]));
             break;
         default:
-            if (isset($this-><?php echo $columnName ?>AsArray[$key])) {
-                return $this-><?php echo $columnName ?>AsArray[$key];
-            } else {
-                throw new Exception($this, 1);
-            }
+            throw new Exception(sprintf('Method %s does not exist.', $name));
             break;
     }
 }
