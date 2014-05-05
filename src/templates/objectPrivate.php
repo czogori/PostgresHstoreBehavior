@@ -6,13 +6,11 @@
 private function initExtraFieldsAsArray()
 {
     if (null === $this-><?php echo $columnName ?>AsArray && null !== $this-><?php echo $columnNameUnderscore ?>) {
-        $hstore = str_replace('"', '', $this-><?php echo $columnNameUnderscore ?>);
-        $pairs = explode(',', $hstore);
-        $array = array();
-        foreach ($pairs as $pair) {
-            $items = explode('=>', $pair);
-            $array[trim($items[0])] = trim($items[1]);
+        @eval(sprintf("\$hstore = array(%s);", $this-><?php echo $columnNameUnderscore ?>));
+
+        if (!isset($hstore) ||  !is_array($hstore)) {
+            throw new Exception(sprintf("Could not parse hstore string '%s' to array.", $this-><?php echo $columnNameUnderscore ?>));
         }
-        $this-><?php echo $columnName ?>AsArray = $array;
+        $this-><?php echo $columnName ?>AsArray = $hstore;
     }
 }
