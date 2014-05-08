@@ -20,9 +20,8 @@ class PostgresHstoreBehaviorQueryBuilderModifier
      */
     public function queryFilter(&$script)
     {
-        $columnName = ucfirst($this->behavior->getParameter('column_name'));
         $parser = new PropelPHPParser($script, true);
-        $parser->replaceMethod('filterBy'.$columnName, $this->addQueryFilterByHstore());
+        $parser->replaceMethod($this->getCamelizedColumnName(), $this->addQueryFilterByHstore());
         $script = $parser->getCode();
     }
 
@@ -30,7 +29,16 @@ class PostgresHstoreBehaviorQueryBuilderModifier
     {
         return $this->behavior->renderTemplate('queryFilterByHstore', array(
             'tableName' => $this->behavior->getTable()->getName(),
-            'columnName' => $this->behavior->getParameter('column_name'),
+            'columnName' => $this->getCamelizedColumnName(),
+            'columnNameUnderscore' => $this->behavior->getParameter('column_name'),
         ));
+    }
+
+    private function getCamelizedColumnName()
+    {
+        $p = new PhpNameGenerator();
+        return 'filterBy' . $p->generateName(array(
+            $this->behavior->getParameter('column_name'),
+            PhpNameGenerator::CONV_METHOD_PHPNAME));
     }
 }
