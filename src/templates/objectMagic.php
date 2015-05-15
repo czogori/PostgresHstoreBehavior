@@ -10,6 +10,14 @@ public function __call($name, $params)
     $this->initExtraFieldsAsArray();
     switch (substr($name, 0, 3)) {
         case 'get':
+            $virtualColumn = ltrim($name, 'get');
+            if ($this->hasVirtualColumn($virtualColumn)) {
+                return $this->getVirtualColumn($virtualColumn);
+            }
+            $virtualColumn = lcfirst($virtualColumn);
+            if ($this->hasVirtualColumn($virtualColumn)) {
+                return $this->getVirtualColumn($virtualColumn);
+            }
             if (isset($this-><?php echo $columnName ?>AsArray[$key])) {
                 return $this-><?php echo $columnName ?>AsArray[$key];
             } else {
@@ -19,6 +27,13 @@ public function __call($name, $params)
             $this->set<?php echo ucfirst($columnName) ?>(array($key => $params[0]));
             break;
         default:
+            if (preg_match('/^from(\w+)$/', $name, $matches)) {
+                return $this->importFrom($matches[1], reset($params));
+            }
+            if (preg_match('/^to(\w+)$/', $name, $matches)) {
+                $includeLazyLoadColumns = isset($params[0]) ? $params[0] : true;
+                return $this->exportTo($matches[1], $includeLazyLoadColumns);
+            }
             throw new Exception(sprintf('Method %s does not exist.', $name));
             break;
     }
