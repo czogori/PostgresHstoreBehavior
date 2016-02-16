@@ -24,7 +24,9 @@ public function __call($name, $params)
                 throw new Exception(sprintf('Hstore key %s does not exist.', $key));
             }
         case 'set':
-            $this->set<?php echo ucfirst($columnName) ?>(array($key => $params[0]));
+            if (isset($params[0])) {
+                $this->set<?php echo ucfirst($columnName) ?>(array($key => $params[0]));
+            }
             break;
         default:
             if (preg_match('/^from(\w+)$/', $name, $matches)) {
