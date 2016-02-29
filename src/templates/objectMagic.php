@@ -21,7 +21,7 @@ public function __call($name, $params)
             if (isset($this-><?php echo $columnName ?>AsArray[$key])) {
                 return $this-><?php echo $columnName ?>AsArray[$key];
             } else {
-                throw new Exception(sprintf('Hstore key %s does not exist.', $key));
+                <?php echo $throwExceptionIfKeyNotExists ? 'throw new Exception(sprintf("Hstore key %s does not exist.", $key));' : 'return null;'; ?>
             }
         case 'set':
             if (isset($params[0])) {
