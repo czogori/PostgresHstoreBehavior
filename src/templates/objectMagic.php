@@ -6,7 +6,7 @@
  */
 public function __call($name, $params)
 {
-    $key = strtolower(ltrim(ltrim($name, 'get'), 'set'));
+    $key = ltrim(ltrim($name, 'get'), 'set');
     $this->initExtraFieldsAsArray();
     switch (substr($name, 0, 3)) {
         case 'get':
