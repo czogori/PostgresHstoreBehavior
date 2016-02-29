@@ -65,6 +65,7 @@ class PostgresHstoreBehaviorObjectBuilderModifier
             'tableName' => $this->behavior->getTable()->getPhpName(),
             'columnName' => $this->camelize($this->behavior->getParameter('column_name')),
             'columnNameUnderscore' => $this->behavior->getParameter('column_name'),
+            'throwExceptionIfKeyNotExists' => 'true' === $this->behavior->getParameter('throw_exception_if_key_not_exists'),
         );
     }
 
